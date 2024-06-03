@@ -86,7 +86,14 @@
       <button>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "795d5c4da4e541ed87bfd5d77ad13f2b"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -101,7 +108,151 @@
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
-    // You may move this JS to another file if you wish
+    //step 2
+    let i = 0;
+    let logBtn = errorBtns[i];
+    i++;
+    logBtn.addEventListener('click', e => {
+      console.log('hello');
+    })
+
+    let errorBtn = errorBtns[i];
+    i++;
+    errorBtn.addEventListener('click', e => {
+      console.error("Congratulations! You've caused an error");
+    })
+
+    let countBtn = errorBtns[i];
+    i++;
+    countBtn.addEventListener('click', e => {
+      console.count();
+    })
+
+    let warnBtn = errorBtns[i];
+    i++;
+    warnBtn.addEventListener('click', e => {
+      console.warn('something bad is about to happen');
+    })
+
+    let assertBtn = errorBtns[i];
+    i++;
+    assertBtn.addEventListener('click', e => {
+      let x = '3';
+      console.assert(typeof(x) == 'number', {x, errorMsg: 'Expected x to be a number'});
+    })
+
+    let clearBtn = errorBtns[i];
+    i++;
+    clearBtn.addEventListener('click', e => {
+      console.clear();
+    })
+
+    let dirBtn = errorBtns[i];
+    i++;
+    dirBtn.addEventListener('click', e => {
+      console.dir(dirBtn);
+    })
+
+    let dirxmlBtn = errorBtns[i];
+    i++;
+    dirxmlBtn.addEventListener('click', e => {
+      console.dirxml(dirBtn);
+    })
+
+    let groupStartBtn = errorBtns[i];
+    i++;
+    groupStartBtn.addEventListener('click', e => {
+      console.group('word');
+      console.info('n');
+      console.info('o');
+    })
+
+    let groupEndBtn = errorBtns[i];
+    i++;
+    groupEndBtn.addEventListener('click', e => {
+      console.groupEnd('word');
+    })
+
+    let tableBtn = errorBtns[i];
+    i++;
+    tableBtn.addEventListener('click', e => {
+      let contents = [
+        {
+          name: 'Pikachu',
+          type: 'Electric'
+        },
+        {
+          name: 'Lucario',
+          type: 'Fighting'
+        }
+      ]
+      console.table(contents);
+    })
+
+    let startTimeBtn = errorBtns[i];
+    i++;
+    startTimeBtn.addEventListener('click', e => {
+      console.time();
+    })
+
+    let endTimeBtn = errorBtns[i];
+    i++;
+    endTimeBtn.addEventListener('click', e => {
+      console.timeEnd();
+    })
+
+    let traceBtn = errorBtns[i];
+    i++;
+    traceBtn.addEventListener('click', e => {
+      let arr = [0, 1, 2];
+      const first = () => second();
+      const second = () => arr.map(i => i + 1);
+      console.trace(first);
+    })
+
+    //step 3
+    let path = 'try';
+    try{
+      let newDiv = document.createElement('div');
+      newDiv.classList.add('very-cool-divs');
+      let matches = document.getElementsByClassName('very-cool-divs');
+      if(matches.length == 0) throw new ReferenceError('No matches for class name found; No elements of the class will be defined.')
+      matches[0].classList.add('the-chosen-cool-divs');
+    } catch(err) {
+      console.error(err);
+      path = 'catch';
+    } finally {
+      console.log('End of the road has been reached, came from the ' + path + ' block');
+    }
+
+    //step 4
+
+    class ObserverError extends Error {
+      constructor(message, observer) {
+        super(observer + ' noticed the following thing wrong with your code: ' + message);
+        this.observer = observer;
+        this.name = 'ObserverError';
+      }
+    }
+
+    try {
+      let msg = 'Hello world!';
+      if(msg == 'Hello world!') throw new ObserverError('That message is too basic for my tastes.', 'Squidward');
+    } catch(err) {
+      console.error(err);
+    }
+
+    //step 5
+    window.addEventListener("error", (event) => {
+      console.log('An error has been triggered.');
+    });
+
+    let globalErrorBtn = errorBtns[i];
+    i++;
+    globalErrorBtn.addEventListener('click', e => {
+      throw new ObserverError('I just wanted to create chaos.', 'Peppa Pig');
+    })
+
   </script>
 </body>
 
